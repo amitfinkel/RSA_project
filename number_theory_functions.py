@@ -65,14 +65,14 @@ def modular_exponent(a, d, n):
     """
     binary = binary_repr(d)
     c = 1
-    prev = (1, a)  # num ** 1 % n = 0
+    prev = (1, a)  # a ** 1 % n = a
     for index, i in enumerate(reversed(list(binary))):
         if int(i) != 0:
             power = 2 ** index
             p = int(power / prev[0])
             num = prev[1] ** p
             num = num % n
-            prev = (power, num)
+            prev = (power, num)  # a ** power % n = num
             c = (c * num) % n
     return c
 
