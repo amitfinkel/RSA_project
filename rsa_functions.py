@@ -22,9 +22,9 @@ class RSA:
         * The public key (N,e)
         * The private key (N,d)
         """
-
-        p = ntf.generate_prime(digits/2)
-        q = ntf.generate_prime(digits/2)
+        d = int(digits/2)
+        p = ntf.generate_prime(d)
+        q = ntf.generate_prime(digits - d)
         N = p*q
         while p == q or len(str(N)) != digits:
             p = ntf.generate_prime(digits / 2)
