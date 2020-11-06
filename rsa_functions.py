@@ -26,11 +26,11 @@ class RSA:
         p = None
         q = None
         while p is None or q is None or p == q or len(str(p*q)) != digits:
-            if p is None:
+            while p is None:
                 p = ntf.generate_prime(d)
-            elif q is None:
+            while q is None:
                 q = ntf.generate_prime(digits - d)
-            else:
+            if len(str(p*q)) != digits:
                 p = ntf.generate_prime(d)
                 q = ntf.generate_prime(digits - d)
         N = p*q
