@@ -23,13 +23,12 @@ class RSA:
         * The private key (N,d)
         """
         d = int(digits/2)
-        p = ntf.generate_prime(d)
-        q = ntf.generate_prime(digits - d)
+        p = None
+        q = None
+        while p is None or q is None or p == q or len(str(p*q)) != digits:
+            p = ntf.generate_prime(d)
+            q = ntf.generate_prime(digits - d)
         N = p*q
-        while p == q or len(str(N)) != digits:
-            p = ntf.generate_prime(digits / 2)
-            q = ntf.generate_prime(digits / 2)
-
         k = (p-1)*(q-1)
 
         def f(n):
