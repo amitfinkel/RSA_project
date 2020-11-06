@@ -26,8 +26,13 @@ class RSA:
         p = None
         q = None
         while p is None or q is None or p == q or len(str(p*q)) != digits:
-            p = ntf.generate_prime(d)
-            q = ntf.generate_prime(digits - d)
+            if p is None:
+                p = ntf.generate_prime(d)
+            elif q is None:
+                q = ntf.generate_prime(digits - d)
+            else:
+                p = ntf.generate_prime(d)
+                q = ntf.generate_prime(digits - d)
         N = p*q
         k = (p-1)*(q-1)
 
