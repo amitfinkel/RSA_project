@@ -65,11 +65,16 @@ def modular_exponent(a, d, n):
     """
     binary = binary_repr(d)
     c = 1
+    prev = (1, a)  # num ** 1 % n = 0
     for index, i in enumerate(reversed(list(binary))):
-        num = a ** (int(i) * (2 ** int(index)))
-        num = num % n
-        c *= num
-    return c % n
+        if int(i) != 0:
+            power = 2 ** index
+            p = int(power / prev[0])
+            num = prev[1] ** p
+            num = num % n
+            prev = (power, num)
+            c = (c * num) % n
+    return c
 
 
 def miller_rabin(n):
