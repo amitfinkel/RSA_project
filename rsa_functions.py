@@ -22,24 +22,26 @@ class RSA:
         * The public key (N,e)
         * The private key (N,d)
         """
-        d = int(digits/2)
+        d = int(digits / 2)
         p = None
         q = None
-        while p is None or q is None or p == q or len(str(p*q)) != digits:
+        while p is None or q is None or p == q or len(str(p * q)) != digits:
             while p is None:
                 p = ntf.generate_prime(d)
             while q is None:
                 q = ntf.generate_prime(digits - d)
-            if len(str(p*q)) != digits:
+            if len(str(p * q)) != digits:
                 p = ntf.generate_prime(d)
                 q = ntf.generate_prime(digits - d)
-        N = p*q
-        k = (p-1)*(q-1)
+        N = p * q
+        k = (p - 1) * (q - 1)
 
-        def f(n):
-            return [j/n for j in range(n*n) if ntf.extended_gcd(j/n, n)[0] == 1]
-        u_k = f(k)
-        e = random.choice(u_k)
+        # def f(n):
+        #     return [j/n for j in range(n*n) if ntf.extended_gcd(j/n, n)[0] == 1]
+        # u_k = f(k)
+        e = random.choice(range(k))
+        while ntf.extended_gcd(e, k)[0] != 1:
+            e = random.choice(range(k))
         d = ntf.modular_inverse(e, k)
 
         public_key = (N, e)

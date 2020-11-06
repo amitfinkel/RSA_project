@@ -123,7 +123,7 @@ def is_prime(n):
 
 
 def generate_prime(digits):
-    for i in range(digits * 10):
+    for i in range(digits * 20):
         n = randrange(10 ** (digits - 1), 10 ** digits)
         if is_prime(n):
             return n
