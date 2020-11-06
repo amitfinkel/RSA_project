@@ -46,7 +46,7 @@ def modular_inverse(a, n):
     gcd, x, y = extended_gcd(a, n)
     if gcd != 1:
         return None
-    return x
+    return x % n
 
 
 def modular_exponent(a, d, n):
