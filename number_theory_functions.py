@@ -1,4 +1,6 @@
 from random import randrange
+from math import floor
+from numpy import binary_repr
 
 
 def extended_gcd(a, b):
@@ -14,6 +16,19 @@ def extended_gcd(a, b):
     (d, x, y): d = gcd(a,b) = a*x + b*y
     """
 
+    # if initially b>a, after one iteration they will switch places
+    # and the calculation can go on normally.
+
+    if a == 0:
+        return b, 0, 1
+
+    d, temp_a, temp_b = extended_gcd(b % a, a)
+
+    a = temp_b - floor(b / a) * temp_a
+    b = temp_a
+
+    return d, a, b
+
 
 def modular_inverse(a, n):
     """
@@ -28,6 +43,10 @@ def modular_inverse(a, n):
     -------
     x: such that (a*x % n) == 1 and 0 <= x < n if one exists, else None
     """
+    gcd, x, y = extended_gcd(a, n)
+    if gcd != 1:
+        return None
+    return x
 
 
 def modular_exponent(a, d, n):
@@ -44,6 +63,13 @@ def modular_exponent(a, d, n):
     -------
     b: such that b == (a**d) % n
     """
+    binary = binary_repr(d)
+    c = 1
+    for index, i in enumerate(list(binary)):
+        num = a ** (int(i) * (2 ** int(index)))
+        num = num % n
+        c = (c * num) % n
+    return c
 
 
 def miller_rabin(n):
@@ -61,18 +87,18 @@ def miller_rabin(n):
     """
     a = randrange(1, n)
     k = 0
-    d = n-1
+    d = n - 1
     while d % 2 == 0:
         k = k + 1
         d = d // 2
     x = modular_exponent(a, d, n)
-    if x == 1 or x == n-1:
+    if x == 1 or x == n - 1:
         return True
     for _ in range(k):
         x = (x * x) % n
         if x == 1:
             return False
-        if x == n-1:
+        if x == n - 1:
             return True
     return False
 
@@ -98,7 +124,7 @@ def is_prime(n):
 
 def generate_prime(digits):
     for i in range(digits * 10):
-        n = randrange(10**(digits-1), 10**digits)
+        n = randrange(10 ** (digits - 1), 10 ** digits)
         if is_prime(n):
             return n
     return None
