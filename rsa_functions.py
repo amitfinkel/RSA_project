@@ -48,6 +48,14 @@ class RSA:
         private_key = (N, d)
         return RSA(public_key=public_key, private_key=private_key)
 
+    @staticmethod
+    def calc_private_and_public(k):
+        e = random.choice(range(k))
+        while ntf.extended_gcd(e, k)[0] != 1:
+            e = random.choice(range(k))
+        d = ntf.modular_inverse(e, k)
+        return d, e
+
     def encrypt(self, m):
         """
         Encrypts the plaintext m using the RSA system
