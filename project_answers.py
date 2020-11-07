@@ -26,7 +26,7 @@ def main():
     p, q = 3491, 3499
     k = (p - 1) * (q - 1)
     N = 12215009
-    d = ntf.modular_inverse(q, k)  # d = 5425399
+    d = ntf.modular_inverse(q, k)  # d = 5425399, e = q
     code = rsa.RSA(public_key=(N, q), private_key=(N, d))
     m = 42
     decrypted_m = code.decrypt(m)
@@ -35,7 +35,7 @@ def main():
            "The decrypted message is: {0}.\n".format(decrypted_m) + \
            "We found it by using other tools to find that a factorization of\n" + \
            "N=12215009 can be p*q=3491*3499. Then we calculated k = phi(N) = (p-1)*(q-1)\n" + \
-           "and used this data to find d for the private key, by using modular_inverse(q,k).\n" + \
+           "and used this data to find d for the private key, by using modular_inverse(e,k).\n" + \
            "We then initialized an RSA class object with the private key ({0},{1})\n".format(N, d) + \
            "and the public key ({0},{1})\n".format(N, q) + \
            "Finally we decrypted the message m = {0} and got the decryption: {1}.\n".format(m, decrypted_m)
