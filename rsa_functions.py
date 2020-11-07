@@ -36,9 +36,6 @@ class RSA:
         N = p * q
         k = (p - 1) * (q - 1)
 
-        # def f(n):
-        #     return [j/n for j in range(n*n) if ntf.extended_gcd(j/n, n)[0] == 1]
-        # u_k = f(k)
         e = random.choice(range(k))
         while ntf.extended_gcd(e, k)[0] != 1:
             e = random.choice(range(k))
